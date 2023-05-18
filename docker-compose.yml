@@ -1,0 +1,39 @@
+version: "3"
+services:
+  spark-master:
+    image: "spark_master"
+    container_name: spark-master
+    ports:
+      - "8080:8080"
+    networks:
+      - spark-net
+    volumes:
+      - ./data:/data
+
+  spark-worker:
+    image: "spark_worker"
+    container_name: spark-worker
+    ports:
+      - "8081:8081"
+    environment:
+      - CORES=2
+      - MEMORY=3G
+    networks:
+      - spark-net
+    volumes:
+      - ./data:/data
+
+  spark-submit:
+    image: "spark_submit"
+    container_name: spark-submit
+    ports:
+      - "8889:8080"
+      - "4040:4040"
+    networks:
+      - spark-net
+    volumes:
+      - ./data:/data
+      - ./docker/airflow/dags:/root/airflow/dags:ro
+
+networks:
+  spark-net:

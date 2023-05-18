@@ -1,0 +1,2 @@
+apache-airflow[celery]
+apache-airflow-providers-apache-spark
